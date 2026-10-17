@@ -1,13 +1,15 @@
-# Acelden Game Studio
+# Acelden
 
-Editorial-style static website for Acelden. Built with portable HTML, CSS and JavaScript, deployed to Wix Headless and mirrored to GitHub.
+Static, portable game studio site, hosted on Wix Headless and mirrored in GitHub.
 
 ## Pages
-- `index.html`: studio, upcoming games, NoeEngine, partnership.
-- `team.html`: founders Clyde Bradley and Emmanuel Nasong'o.
+- `index.html`: landing page, original SVG concept illustration, early games, NoeEngine, team, Noethric partnership.
+- `team.html`: Clyde Bradley and Emmanuel Nasong'o founder profiles.
+
+No game releases or finished NoeEngine capabilities are claimed. The original SVG is illustrative concept art, not gameplay footage.
 
 ## Development
-Open `index.html` directly or serve the directory using `python3 -m http.server 8000`. No build step required.
+Serve the directory using any static file server, for example `python3 -m http.server 8000`.
 
-## Notes
-NoeEngine's editor graphic is a concept illustration, not a screenshot. Game projects and capabilities are aspirational/in development. The Noethric mark is an SVG interpretation of the provided reference.
+## Accessibility
+Keyboard focus styles, skip link, reduced-motion support, visible-by-default content, responsive mobile navigation, and descriptive alternative text.
