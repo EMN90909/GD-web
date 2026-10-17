@@ -8,7 +8,7 @@ function mount(){
  const canvas=stage.querySelector('canvas'),ctx=canvas.getContext('2d'),start=stage.querySelector('.arcade-start'),jumpBtn=stage.querySelector('.arcade-jump'),scoreEl=stage.querySelector('.arcade-score'),message=stage.querySelector('.arcade-message');
  if(!ctx)return;
  const W=720,H=330,ground=260,player={x:96,y:0,w:37,h:43,vy:0},gravity=1850,jumpVelocity=-690;
- let running=false,over=false,score=0,speed=280,obstacles=[],spawnIn=1,frame=0,raf=0,last=0,visible=true;
+ let running=false,over=false,score=0,speed=280,obstacles=[],spawnIn=1,frame=0,raf=0,last=0,visible=true,countdownTimer=0,phase='idle';const finale=stage.closest('.contact-finale');
  const rand=(a,b)=>a+Math.random()*(b-a);
  const rect=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h))};
  function character(){
@@ -28,18 +28,24 @@ function mount(){
   ctx.fillStyle='#17391e';ctx.font='bold 18px monospace';ctx.textAlign='left';ctx.fillText('ACELDEN RUN',22,29);ctx.textAlign='right';ctx.fillText(String(Math.floor(score)).padStart(5,'0'),W-22,29);
   if(over){rect(0,0,W,H,'#b7ff5477');ctx.fillStyle='#142b1a';ctx.textAlign='center';ctx.font='bold 34px monospace';ctx.fillText('GAME OVER',W/2,115);ctx.font='bold 17px monospace';ctx.fillText('PRESS START TO RETRY',W/2,150)}
  }
- function reset(){running=true;over=false;score=0;speed=280;obstacles=[];spawnIn=1.15;player.y=0;player.vy=0;frame=0;last=0;stage.classList.add('is-playing');start.querySelector('strong').textContent='RESTART';start.querySelector('small').textContent='PLAY AGAIN';message.textContent='';scoreEl.textContent='00000';cancelAnimationFrame(raf);raf=requestAnimationFrame(tick)}
- function jump(){if(!running){reset();return}if(player.y<=0.01){player.vy=jumpVelocity}}
+ function setPhase(next){phase=next;stage.dataset.state=next;stage.classList.toggle('is-playing',next==='playing');finale?.classList.toggle('arcade-active',next==='countdown'||next==='playing');}
+ function reset(){
+  clearInterval(countdownTimer);cancelAnimationFrame(raf);running=false;over=false;score=0;speed=280;obstacles=[];spawnIn=1.15;player.y=0;player.vy=0;frame=0;last=0;scoreEl.textContent='00000';setPhase('countdown');
+  let count=3;message.textContent=String(count);draw();
+  countdownTimer=setInterval(()=>{if(!stage.isConnected){clearInterval(countdownTimer);return}count--;if(count>0){message.textContent=String(count);return}clearInterval(countdownTimer);message.textContent='';running=true;setPhase('playing');last=0;raf=requestAnimationFrame(tick)},1000);
+ }
+ function jump(){if(phase!=='playing'||!running)return;if(player.y<=0.01)player.vy=jumpVelocity}
+ function endGame(){running=false;over=true;cancelAnimationFrame(raf);setPhase('over');start.querySelector('strong').textContent='TRY AGAIN';start.querySelector('small').textContent='SCORE '+Math.floor(score);draw()}
  function tick(now){if(!running)return;if(!last)last=now;const dt=Math.min((now-last)/1000,.035);last=now;frame++;score+=dt*14;speed=Math.min(520,280+score*.42);player.vy+=gravity*dt;player.y-=player.vy*dt;if(player.y<0){player.y=0;player.vy=0}
   spawnIn-=dt;if(spawnIn<=0){const h=rand(33,63);obstacles.push({x:W+10,w:rand(18,29),h});spawnIn=rand(.95,1.55)*280/speed}
   obstacles.forEach(o=>o.x-=speed*dt);obstacles=obstacles.filter(o=>o.x+o.w>0);
-  if(obstacles.some(o=>player.x+player.w-7>o.x&&player.x+7<o.x+o.w&&player.y<o.h-8)){running=false;over=true;stage.classList.remove('is-playing');start.querySelector('strong').textContent='TRY AGAIN';start.querySelector('small').textContent='SCORE '+Math.floor(score);draw();return}
+  if(obstacles.some(o=>player.x+player.w-7>o.x&&player.x+7<o.x+o.w&&player.y<o.h-8)){endGame();return}
   scoreEl.textContent=String(Math.floor(score)).padStart(5,'0');draw();raf=requestAnimationFrame(tick)
  }
- const onStart=()=>reset(),onJump=()=>jump(),onCanvas=()=>jump(),onKey=e=>{if(!stage.isConnected||!visible)return;if(['Space','ArrowUp'].includes(e.code)&&!e.repeat&&!(e.target instanceof HTMLElement&&e.target.closest('input,textarea,select,[contenteditable=true]'))){if(running||document.activeElement===start||document.activeElement===jumpBtn){e.preventDefault();jump()}}};
- const observer=new IntersectionObserver(entries=>{visible=entries[0]?.isIntersecting??false;if(!visible&&running){running=false;stage.classList.remove('is-playing');start.querySelector('strong').textContent='RESUME';start.querySelector('small').textContent='PRESS TO PLAY';cancelAnimationFrame(raf)}},{threshold:0});
+ const onStart=()=>reset(),onJump=()=>jump(),onCanvas=e=>{e.preventDefault();jump()},onKey=e=>{if(!stage.isConnected||!visible)return;if(['Space','ArrowUp'].includes(e.code)&&!e.repeat&&!(e.target instanceof HTMLElement&&e.target.closest('input,textarea,select,[contenteditable=true]'))){if(phase==='playing'){e.preventDefault();jump()}}};
+ const observer=new IntersectionObserver(entries=>{visible=entries[0]?.isIntersecting??false;if(!visible&&(running||phase==='countdown')){running=false;clearInterval(countdownTimer);cancelAnimationFrame(raf);setPhase('idle');message.textContent='PRESS START TO PLAY';start.querySelector('strong').textContent='PRESS START';start.querySelector('small').textContent='PLAYER 02 READY'}},{threshold:0});
  start.addEventListener('click',onStart);jumpBtn.addEventListener('click',onJump);canvas.addEventListener('pointerdown',onCanvas);window.addEventListener('keydown',onKey);observer.observe(stage);draw();
- cleanup=()=>{running=false;cancelAnimationFrame(raf);observer.disconnect();start.removeEventListener('click',onStart);jumpBtn.removeEventListener('click',onJump);canvas.removeEventListener('pointerdown',onCanvas);window.removeEventListener('keydown',onKey)};
+ cleanup=()=>{running=false;clearInterval(countdownTimer);setPhase('idle');cancelAnimationFrame(raf);observer.disconnect();start.removeEventListener('click',onStart);jumpBtn.removeEventListener('click',onJump);canvas.removeEventListener('pointerdown',onCanvas);window.removeEventListener('keydown',onKey)};
 }
 document.addEventListener('DOMContentLoaded',mount);
 window.addEventListener('hashchange',()=>setTimeout(mount,80));
