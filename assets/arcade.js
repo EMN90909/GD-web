@@ -9,12 +9,15 @@ function mount(){
  if(!canvas||!start||!scoreEl||!message)return;
  const ctx=canvas.getContext('2d');if(!ctx)return;
  const W=720,H=330,ground=260,player={x:96,y:0,w:37,h:43,vy:0},gravity=1850,jumpVelocity=-690;
- let running=false,over=false,score=0,speed=280,obstacles=[],spawnIn=1,frame=0,raf=0,last=0,visible=true,countdownTimer=0,deathRaf=0,finishTimer=0,phase='idle',deathAt=0,ashes=[],rain=[],rainClock=0,weatherCycle=0;const finale=stage.closest('.contact-finale');
+ let running=false,over=false,score=0,speed=280,obstacles=[],spawnIn=1,frame=0,raf=0,last=0,visible=true,countdownTimer=0,deathRaf=0,finishTimer=0,phase='idle',deathAt=0,ashes=[],rain=[],rainClock=0,snow=[],snowClock=0;const finale=stage.closest('.contact-finale');
  const highScoreKey='acelden-arcade-high-score-v1';
  let highScore=0;
  try{highScore=Math.max(0,Number(localStorage.getItem(highScoreKey))||0)}catch(_){}
  const saveHighScore=()=>{const points=Math.floor(score);if(points>highScore){highScore=points;try{localStorage.setItem(highScoreKey,String(highScore))}catch(_){}}};
  const rand=(a,b)=>a+Math.random()*(b-a);
+ // Short winter stretches begin later in the run, with clear breaks between them.
+ const isSnowing=points=>points>=350&&Math.floor((points-350)/130)%5===0;
+
  const palettes=[
   {sky:'#b7ff54',ink:'#142b1a',detail:'#699c49',cloud:'#87be55',orb:'#fff9b1',name:'DAY'},
   {sky:'#d9d9d9',ink:'#292929',detail:'#888888',cloud:'#b6b6b6',orb:'#f8f8f8',name:'DAWN'},
@@ -74,24 +77,32 @@ function mount(){
   }else{for(let i=0;i<8;i++){const angle=i*Math.PI/4;rect(orbX+Math.cos(angle)*38-3,orbY+Math.sin(angle)*38-3,7,7,p.orb)}}
   for(let i=0;i<12;i++){let x=(i*101-frame*.22)%(W+100);if(x<0)x+=W+100;rect(x,47+(i%3)*30,24,4,p.cloud);rect(x+8,43+(i%3)*30,8,4,p.cloud)}
   // Weather bursts cycle independently of obstacle speed, with rain overlaid on scenery.
-  const raining=score>=180&&(Math.floor(score/180)%6===1);
+  const raining=!isSnowing(score)&&score>=180&&(Math.floor(score/180)%6===1);
   if(raining){for(const drop of rain){ctx.globalAlpha=.52;rect(drop.x,drop.y,2,drop.len,p.ink)}ctx.globalAlpha=1;}
-  rect(0,ground,W,5,p.ink);
+  const winter=isSnowing(score);
+  if(winter||snow.length){
+   for(const flake of snow){ctx.globalAlpha=.82;rect(flake.x,flake.y,flake.size,flake.size,p.night?'#d7ffb4':'#f5fff0')}ctx.globalAlpha=1;
+  }
+  if(winter){
+   // Accumulated snow visibly coats the running track and obstacle bases.
+   rect(0,ground-7,W,9,p.night?'#b7ff54':'#eef9e9');
+   for(let i=0;i<32;i++)rect(i*25-7,ground-10+(i%3)*2,11,4,p.night?'#d8ffb9':'#fff');
+  }else rect(0,ground,W,5,p.ink);
   for(let i=0;i<24;i++){let x=(i*40-frame*(running?speed:0)/24)%W;if(x<0)x+=W;rect(x,ground+18,18,3,p.detail)}
   obstacles.forEach(o=>hazard(o,p.ink));
   if(phase!=='dying')character(p.ink,p.sky);
   if(phase==='dying'){const elapsed=(performance.now()-deathAt)/1000;ashes.forEach(q=>{const age=elapsed*q.rate;ctx.globalAlpha=Math.max(0,1-age/1.4);rect(q.x+q.vx*elapsed,q.y-q.vy*elapsed-25*elapsed*elapsed,q.s,q.s,p.ink)});ctx.globalAlpha=1}
   ctx.fillStyle=p.ink;ctx.font='bold 18px monospace';ctx.textAlign='left';ctx.fillText('ACELDEN RUN',22,29);ctx.textAlign='right';ctx.fillText(String(Math.floor(score)).padStart(5,'0'),W-22,29);ctx.font='bold 13px monospace';ctx.fillText('HI '+String(highScore).padStart(5,'0'),W-22,47);
-  ctx.textAlign='right';ctx.font='bold 12px monospace';ctx.fillText(p.name+' / LV '+(1+Math.max(0,Math.floor((score-100)/50)+1)),W-20,H-15);
+  ctx.textAlign='right';ctx.font='bold 12px monospace';ctx.fillText((winter?'SNOW / ':p.name+' / ')+'LV '+(score<100?1:2+Math.floor((score-100)/50)),W-20,H-15);
   if(phase==='failed'||phase==='dying'){ctx.fillStyle=p.ink;ctx.textAlign='center';ctx.font='bold 42px monospace';ctx.fillText(phase==='failed'?'FAILED':'',W/2,110);if(phase==='failed'){ctx.font='bold 22px monospace';ctx.fillText('SCORE '+String(Math.floor(score)).padStart(5,'0'),W/2,149);ctx.font='bold 17px monospace';ctx.fillText('BEST '+String(highScore).padStart(5,'0'),W/2,179)}}
  }
  function setPhase(next){phase=next;stage.dataset.state=next;stage.classList.toggle('is-playing',next==='playing');finale?.classList.toggle('arcade-active',['countdown','playing','dying','failed','closing'].includes(next));}
  function reset(){
-  clearInterval(countdownTimer);clearTimeout(finishTimer);cancelAnimationFrame(deathRaf);cancelAnimationFrame(raf);running=false;over=false;score=0;speed=280;obstacles=[];spawnIn=1.15;rain=[];rainClock=0;player.y=0;player.vy=0;frame=0;last=0;scoreEl.textContent='00000';setPhase('countdown');
+  clearInterval(countdownTimer);clearTimeout(finishTimer);cancelAnimationFrame(deathRaf);cancelAnimationFrame(raf);running=false;over=false;score=0;speed=280;obstacles=[];spawnIn=1.15;rain=[];rainClock=0;snow=[];snowClock=0;player.y=0;player.vy=0;frame=0;last=0;scoreEl.textContent='00000';setPhase('countdown');
   let count=3;message.textContent=String(count);draw();
   countdownTimer=setInterval(()=>{if(!stage.isConnected){clearInterval(countdownTimer);return}count--;if(count>0){message.textContent=String(count);return}clearInterval(countdownTimer);message.textContent='';running=true;setPhase('playing');last=0;raf=requestAnimationFrame(tick)},1000);
  }
- function jump(){if(phase!=='playing'||!running)return;if(player.y<=0.01)player.vy=jumpVelocity}
+ function jump(){if(phase!=='playing'||!running)return;if(player.y<=0.01)player.vy=jumpVelocity*(isSnowing(score)?.78:1)}
  function endGame(){saveHighScore();running=false;over=true;cancelAnimationFrame(raf);deathAt=performance.now();const x=player.x+18,y=ground-player.h-player.y+19;ashes=Array.from({length:34},()=>({x:x+(Math.random()-.5)*28,y:y+(Math.random()-.5)*26,vx:(Math.random()-.5)*125,vy:50+Math.random()*135,s:3+Math.random()*6,rate:.65+Math.random()*.65,c:Math.random()>.35?'#17391e':'#588443'}));setPhase('dying');const animate=()=>{if(phase!=='dying')return;draw();if(performance.now()-deathAt<1350)deathRaf=requestAnimationFrame(animate);else{setPhase('failed');draw();finishTimer=setTimeout(()=>{setPhase('closing');finishTimer=setTimeout(()=>{setPhase('over');start.querySelector('strong').textContent='PLAY AGAIN';start.querySelector('small').textContent='SCORE '+Math.floor(score);draw()},1050)},1350)}};animate()}
  function tick(now){
   if(!running)return;
@@ -104,9 +115,16 @@ function mount(){
   else rainClock=0;
   for(const drop of rain){drop.y+=drop.v*dt;drop.x-=55*dt}
   rain=rain.filter(drop=>drop.y<H+20);
+  const winter=isSnowing(score);
+  if(winter){
+   snowClock+=dt*32;
+   while(snowClock>=1){snowClock--;snow.push({x:rand(0,W),y:rand(-30,-2),size:rand(3,7),vy:rand(40,90),drift:rand(-22,18)})}
+  }else snowClock=0;
+  for(const flake of snow){flake.y+=flake.vy*dt;flake.x+=flake.drift*dt}
+  snow=snow.filter(flake=>flake.y<ground-5&&flake.x>-15&&flake.x<W+15);
   // First increase at 100, then another increase for each additional 50 points.
   const tier=score<100?0:1+Math.floor((score-100)/50);
-  speed=Math.min(880,280+tier*40);
+  speed=Math.min(880,280+tier*40)*(winter?.76:1);
   player.vy+=gravity*dt;player.y-=player.vy*dt;
   if(player.y<0){player.y=0;player.vy=0}
   spawnIn-=dt;
