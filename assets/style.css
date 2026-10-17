@@ -92,3 +92,19 @@ html,body{min-height:100%;overflow-x:clip}.studio-footer{margin-bottom:0!importa
 .contact-stage .contact-aside p{margin:0;max-width:570px}
 .contact-stage .contact-form-motion{min-width:0}
 @media(max-width:850px){.contact-stage .contact-layout{grid-template-columns:1fr;gap:2.5rem;margin-top:2rem}.contact-stage .contact-aside{padding-top:1rem;gap:1.5rem}.contact-stage .contact-aside .contact-plain-title{font-size:clamp(3.4rem,12vw,6rem)}}
+
+/* Larger arcade preview and cinematic fail-to-copy transition */
+.contact-finale .arcade-stage{max-width:850px;min-height:clamp(420px,41vw,590px);padding-right:3.3rem}
+.contact-finale .arcade-machine{max-width:780px}
+.contact-finale .arcade-jump{display:none!important}
+.contact-finale.arcade-active .arcade-stage{max-width:1100px!important}
+.contact-finale.arcade-active .arcade-machine{max-width:none}
+.contact-finale.arcade-active .finale-main{position:relative;min-height:clamp(440px,45vw,650px)}
+.contact-finale .finale-copy{transition:opacity .7s ease,transform .9s cubic-bezier(.18,.7,.18,1)}
+.contact-finale.arcade-active .finale-copy{display:block!important;position:absolute;left:0;top:50%;width:min(46%,570px);opacity:0;visibility:hidden;transform:translate(-75px,-50%);pointer-events:none}
+.contact-finale.arcade-active .arcade-stage{transition:transform 1s cubic-bezier(.18,.7,.18,1),opacity .9s ease,clip-path 1s cubic-bezier(.18,.7,.18,1);clip-path:inset(0 0 0 0)}
+.contact-finale.arcade-active .arcade-stage[data-state="closing"]{transform:translateX(32%);clip-path:inset(0 0 0 100%);opacity:0}
+.contact-finale.arcade-active:has(.arcade-stage[data-state="closing"]) .finale-copy{opacity:1;visibility:visible;transform:translate(0,-50%)}
+.arcade-stage[data-state="dying"] .arcade-message,.arcade-stage[data-state="failed"] .arcade-message,.arcade-stage[data-state="closing"] .arcade-message{display:none!important}
+@media(max-width:850px){.contact-finale .arcade-stage{min-height:340px;padding-right:1.5rem}.contact-finale.arcade-active .finale-main{min-height:390px}.contact-finale.arcade-active .finale-copy{width:100%;top:0;transform:translate(-55px,0)}.contact-finale.arcade-active:has(.arcade-stage[data-state="closing"]) .finale-copy{transform:translate(0,0)}}
+@media(prefers-reduced-motion:reduce){.contact-finale .finale-copy,.contact-finale.arcade-active .arcade-stage{transition:none!important}}
