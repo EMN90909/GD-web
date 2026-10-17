@@ -9,7 +9,7 @@ function mount(){
  if(!canvas||!start||!scoreEl||!message)return;
  const ctx=canvas.getContext('2d');if(!ctx)return;
  const W=720,H=330,ground=260,player={x:96,y:0,w:37,h:43,vy:0},gravity=1850,jumpVelocity=-690;
- let running=false,over=false,score=0,speed=280,obstacles=[],spawnIn=1,frame=0,raf=0,last=0,visible=true,countdownTimer=0,deathRaf=0,finishTimer=0,phase='idle',deathAt=0,ashes=[];const finale=stage.closest('.contact-finale');
+ let running=false,over=false,score=0,speed=280,obstacles=[],spawnIn=1,frame=0,raf=0,last=0,visible=true,countdownTimer=0,deathRaf=0,finishTimer=0,phase='idle',deathAt=0,ashes=[],rain=[],rainClock=0,weatherCycle=0;const finale=stage.closest('.contact-finale');
  const rand=(a,b)=>a+Math.random()*(b-a);
  const palettes=[
   {sky:'#b7ff54',ink:'#142b1a',detail:'#699c49',cloud:'#87be55',orb:'#fff9b1',name:'DAY'},
@@ -29,6 +29,7 @@ function mount(){
   const fade=Math.max(0,Math.min(1,(t-.58)/.38));const x=palettes[a.p],y=palettes[b.p];
   const p={};for(const key of ['sky','ink','detail','cloud','orb'])p[key]=mix(x[key],y[key],fade);
   p.name=fade<.5?x.name:y.name;p.night=a.p===2||b.p===2&&fade>.5;
+  p.cycle=n/650;
   return p;
  }
  function hazard(o,ink){
@@ -60,12 +61,17 @@ function mount(){
   const p=world();
   rect(0,0,W,H,p.sky);
   // Pixel sun/moon, horizon and stars follow the world phase.
-  const orbX=594,orbY=72,rad=p.night?19:27;
+  // The sun travels from east to west, and the moon follows a separate night arc.
+  const arc=p.night?Math.max(0,Math.min(1,(p.cycle-.46)/.31)):p.cycle<.46?p.cycle/.46:Math.max(0,Math.min(1,(p.cycle-.77)/.23));
+  const orbX=65+arc*590,orbY=118-72*Math.sin(arc*Math.PI),rad=p.night?19:27;
   ctx.fillStyle=p.orb;ctx.beginPath();ctx.arc(orbX,orbY,rad,0,Math.PI*2);ctx.fill();
   if(p.night){ctx.fillStyle=p.sky;ctx.beginPath();ctx.arc(orbX+10,orbY-7,rad*.82,0,Math.PI*2);ctx.fill();
    for(let i=0;i<14;i++)rect(35+(i*127)%W,45+(i*47)%125,3,3,p.orb);
   }else{for(let i=0;i<8;i++){const angle=i*Math.PI/4;rect(orbX+Math.cos(angle)*38-3,orbY+Math.sin(angle)*38-3,7,7,p.orb)}}
   for(let i=0;i<12;i++){let x=(i*101-frame*.22)%(W+100);if(x<0)x+=W+100;rect(x,47+(i%3)*30,24,4,p.cloud);rect(x+8,43+(i%3)*30,8,4,p.cloud)}
+  // Weather bursts cycle independently of obstacle speed, with rain overlaid on scenery.
+  const raining=score>=80&&(Math.floor(score/110)%3===1||Math.floor(score/110)%3===2);
+  if(raining){for(const drop of rain){ctx.globalAlpha=.52;rect(drop.x,drop.y,2,drop.len,p.ink)}ctx.globalAlpha=1;}
   rect(0,ground,W,5,p.ink);
   for(let i=0;i<24;i++){let x=(i*40-frame*(running?speed:0)/24)%W;if(x<0)x+=W;rect(x,ground+18,18,3,p.detail)}
   obstacles.forEach(o=>hazard(o,p.ink));
@@ -77,7 +83,7 @@ function mount(){
  }
  function setPhase(next){phase=next;stage.dataset.state=next;stage.classList.toggle('is-playing',next==='playing');finale?.classList.toggle('arcade-active',['countdown','playing','dying','failed','closing'].includes(next));}
  function reset(){
-  clearInterval(countdownTimer);clearTimeout(finishTimer);cancelAnimationFrame(deathRaf);cancelAnimationFrame(raf);running=false;over=false;score=0;speed=280;obstacles=[];spawnIn=1.15;player.y=0;player.vy=0;frame=0;last=0;scoreEl.textContent='00000';setPhase('countdown');
+  clearInterval(countdownTimer);clearTimeout(finishTimer);cancelAnimationFrame(deathRaf);cancelAnimationFrame(raf);running=false;over=false;score=0;speed=280;obstacles=[];spawnIn=1.15;rain=[];rainClock=0;player.y=0;player.vy=0;frame=0;last=0;scoreEl.textContent='00000';setPhase('countdown');
   let count=3;message.textContent=String(count);draw();
   countdownTimer=setInterval(()=>{if(!stage.isConnected){clearInterval(countdownTimer);return}count--;if(count>0){message.textContent=String(count);return}clearInterval(countdownTimer);message.textContent='';running=true;setPhase('playing');last=0;raf=requestAnimationFrame(tick)},1000);
  }
@@ -88,6 +94,11 @@ function mount(){
   if(!last)last=now;
   const dt=Math.min((now-last)/1000,.035);last=now;frame++;
   score+=dt*14;
+  const raining=score>=80&&(Math.floor(score/110)%3===1||Math.floor(score/110)%3===2);
+  if(raining){rainClock+=dt*130;while(rainClock>=1){rainClock--;rain.push({x:rand(0,W),y:-rand(5,70),len:rand(9,21),v:rand(240,390)})}}
+  else rainClock=0;
+  for(const drop of rain){drop.y+=drop.v*dt;drop.x-=55*dt}
+  rain=rain.filter(drop=>drop.y<H+20);
   // First increase at 100, then another increase for each additional 50 points.
   const tier=score<100?0:1+Math.floor((score-100)/50);
   speed=Math.min(880,280+tier*40);
@@ -114,10 +125,18 @@ function mount(){
   if(obstacles.some(o=>{const oy=ground-o.h;const top=o.type==='bird'?oy+4:o.type==='arrow'?oy+4:oy;const bottom=o.type==='bird'?oy+29:o.type==='arrow'?oy+26:ground;return player.x+player.w-7>o.x&&player.x+7<o.x+o.w&&py+player.h-5>top&&py+5<bottom})){endGame();return}
   scoreEl.textContent=String(Math.floor(score)).padStart(5,'0');draw();raf=requestAnimationFrame(tick);
  }
- const onStart=()=>reset(),onJump=()=>jump(),onCanvas=e=>{e.preventDefault();jump()},onKey=e=>{if(!stage.isConnected||!visible)return;if(['Space','ArrowUp'].includes(e.code)&&!e.repeat&&!(e.target instanceof HTMLElement&&e.target.closest('input,textarea,select,[contenteditable=true]'))){if(phase==='playing'){if(e.code==='Space')e.preventDefault();jump()}}};
+ const onStart=()=>reset(),onCanvas=e=>{e.preventDefault();jump()},onKey=e=>{
+  if(!stage.isConnected||!visible||phase!=='playing')return;
+  if(e.target instanceof HTMLElement&&e.target.closest('input,textarea,select,[contenteditable=true]'))return;
+  // Capture and suppress both directions, including key repeat, while actively playing.
+  if(['ArrowUp','ArrowDown','Space'].includes(e.code)){
+   e.preventDefault();
+   if(!e.repeat&&['ArrowUp','Space'].includes(e.code))jump();
+  }
+ };
  const observer=new IntersectionObserver(entries=>{visible=entries[0]?.isIntersecting??false;if(!visible&&(running||phase==='countdown')){running=false;clearInterval(countdownTimer);cancelAnimationFrame(raf);setPhase('idle');message.textContent='PRESS START TO PLAY';start.querySelector('strong').textContent='PRESS START';start.querySelector('small').textContent='PLAYER 02 READY'}},{threshold:0});
- start.addEventListener('click',onStart);canvas.addEventListener('pointerdown',onCanvas);window.addEventListener('keydown',onKey);observer.observe(stage);draw();
- cleanup=()=>{running=false;clearInterval(countdownTimer);clearTimeout(finishTimer);cancelAnimationFrame(deathRaf);setPhase('idle');cancelAnimationFrame(raf);observer.disconnect();start.removeEventListener('click',onStart);canvas.removeEventListener('pointerdown',onCanvas);window.removeEventListener('keydown',onKey)};
+ start.addEventListener('click',onStart);canvas.addEventListener('pointerdown',onCanvas);window.addEventListener('keydown',onKey,{capture:true,passive:false});observer.observe(stage);draw();
+ cleanup=()=>{running=false;clearInterval(countdownTimer);clearTimeout(finishTimer);cancelAnimationFrame(deathRaf);setPhase('idle');cancelAnimationFrame(raf);observer.disconnect();start.removeEventListener('click',onStart);canvas.removeEventListener('pointerdown',onCanvas);window.removeEventListener('keydown',onKey,true)};
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
 document.addEventListener('acelden:page-ready',mount);
