@@ -1,10 +1,14 @@
-# Acelden game studio
+# Acelden Game Studio
 
-Independent game studio website with black/electric-lime editorial design and motion inspired by the supplied UmpaUmpa Wix Studio video. Original CSS artwork, no Wix template assets copied.
+A static HTML/CSS/JavaScript recreation inspired by the layout and motion of the user's Wix Studio UmpaUmpa reference, based on a supplied screen recording. It is not an export or pixel-identical copy of the Wix Studio site.
 
-- `index.html`: Studio, projects, NoeEngine, Noethric partnership.
-- `team.html`: Founders Clyde Bradley and Emmanuel Nasong'o.
-- `assets/style.css`: Responsive design and animations.
-- `assets/main.js`: Navigation, scroll progress, reduced-motion handling.
+## Pages
+- index.html: homepage, projects, tools, studio and Noethric partnership
+- team.html: founders
+- contact.html: contact form UI (delivery requires configuration)
 
-Games and engine capabilities are described as in development or future plans. Artwork is conceptual, not product screenshots.
+## Assets
+Typography cards replace the original template photography: Noe, Noqeri, NoeEngine. No original Wix template images are included.
+
+## Development
+Open index.html in a browser or serve the directory using a static server. Respect reduced motion; no framework dependencies.
