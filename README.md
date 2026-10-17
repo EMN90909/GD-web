@@ -1,23 +1,23 @@
-# Acelden game studio — landing page
+# Acelden Studio Website
 
-Cinematic, accessible, responsive static landing page for the studio's early-stage public presence.
+Static multipage marketing site for Acelden, an early-stage independent game studio.
 
-## Run
+Pages: Home (`index.html`), Games, NoeEngine, About, Contact, Privacy, Terms.
 
-Serve this directory with any static web server, such as `python3 -m http.server 8080`, then visit `http://localhost:8080`.
+This site uses HTML, CSS and JavaScript, and can be served on any static host. There is no build step. Fonts are loaded from Google Fonts; the Noethric wordmark is a vector asset under `assets/`.
 
-## Structure
+## Local preview
 
-- `index.html` — semantic landing page, metadata and sections.
-- `assets/style.css` — responsive visual design, motion and reduced-motion handling.
-- `assets/main.js` — mobile navigation, reveal-on-scroll and footer year.
+Run `python3 -m http.server 8080` in the repository, then open `http://localhost:8080`.
 
-## Before going public
+## Deployment
 
-Replace the temporary `hello@acelden.example` email address with a real team contact. Studio name remains a working brand pending legal/trademark clearance. Portfolio cards describe plans, not released titles. Some font files are loaded from Google Fonts; system fonts provide fallback. No build dependencies.
+Wix Headless static site; upload the entire site directory as one archive, preserving file paths. The GitHub main branch is the source of truth.
 
-Developed as portable static source; Wix hosting is optional, not required at runtime.
+## Before launch
 
-## October 2026 refresh
-
-The landing page now includes a video-inspired luminous hero with motion-reduced fallbacks, a dedicated NoeEngine in-development section, and a Noethric partnership feature using a vector trace of the supplied wordmark image. The engine editor illustration is explicitly labeled as a concept rather than a product screenshot. Static files deploy directly to Wix Headless hosting. Contact actions point to the public project repository until a verified studio email is supplied.
+- Replace or confirm draft legal pages with jurisdiction-appropriate policies.
+- Set up a studio-owned email or official contact channel, then update `contact.html`.
+- Confirm company name and trademarks before formal public launch.
+- Replace studio art with real playable game screenshots when available.
+- NoeEngine is based on a Godot fork; verify license obligations and keep required notices with engine distributions.
