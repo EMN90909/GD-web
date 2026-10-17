@@ -74,7 +74,7 @@ function mount(){
   }else{for(let i=0;i<8;i++){const angle=i*Math.PI/4;rect(orbX+Math.cos(angle)*38-3,orbY+Math.sin(angle)*38-3,7,7,p.orb)}}
   for(let i=0;i<12;i++){let x=(i*101-frame*.22)%(W+100);if(x<0)x+=W+100;rect(x,47+(i%3)*30,24,4,p.cloud);rect(x+8,43+(i%3)*30,8,4,p.cloud)}
   // Weather bursts cycle independently of obstacle speed, with rain overlaid on scenery.
-  const raining=score>=80&&(Math.floor(score/110)%3===1||Math.floor(score/110)%3===2);
+  const raining=score>=180&&(Math.floor(score/180)%6===1);
   if(raining){for(const drop of rain){ctx.globalAlpha=.52;rect(drop.x,drop.y,2,drop.len,p.ink)}ctx.globalAlpha=1;}
   rect(0,ground,W,5,p.ink);
   for(let i=0;i<24;i++){let x=(i*40-frame*(running?speed:0)/24)%W;if(x<0)x+=W;rect(x,ground+18,18,3,p.detail)}
@@ -99,8 +99,8 @@ function mount(){
   const dt=Math.min((now-last)/1000,.035);last=now;frame++;
   score+=dt*14;
   if(Math.floor(score)>highScore)saveHighScore();
-  const raining=score>=80&&(Math.floor(score/110)%3===1||Math.floor(score/110)%3===2);
-  if(raining){rainClock+=dt*130;while(rainClock>=1){rainClock--;rain.push({x:rand(0,W),y:-rand(5,70),len:rand(9,21),v:rand(240,390)})}}
+  const raining=score>=180&&(Math.floor(score/180)%6===1);
+  if(raining){rainClock+=dt*65;while(rainClock>=1){rainClock--;rain.push({x:rand(0,W),y:-rand(5,70),len:rand(9,21),v:rand(240,390)})}}
   else rainClock=0;
   for(const drop of rain){drop.y+=drop.v*dt;drop.x-=55*dt}
   rain=rain.filter(drop=>drop.y<H+20);
