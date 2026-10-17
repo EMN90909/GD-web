@@ -84,3 +84,11 @@ html,body{min-height:100%;overflow-x:clip}.studio-footer{margin-bottom:0!importa
 .arcade-stage[data-state="over"] .arcade-message{display:none!important}
 .arcade-screen{touch-action:manipulation}
 @media(max-width:850px){.contact-finale.arcade-active .arcade-stage{padding:0 0 4.5rem!important}.contact-finale.arcade-active .arcade-machine{width:100%}}
+
+/* Contact heading sits alongside the form rather than above the grid */
+.contact-stage .contact-layout{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,7rem);align-items:start;margin-top:clamp(3rem,8vh,7rem)}
+.contact-stage .contact-aside{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(1.5rem,3vw,3rem);padding-top:clamp(2rem,7vh,6rem)}
+.contact-stage .contact-aside .contact-plain-title{position:static!important;transform:none!important;margin:0!important;max-width:100%;font-size:clamp(3.2rem,6.1vw,7rem);line-height:.93;letter-spacing:-.075em}
+.contact-stage .contact-aside p{margin:0;max-width:570px}
+.contact-stage .contact-form-motion{min-width:0}
+@media(max-width:850px){.contact-stage .contact-layout{grid-template-columns:1fr;gap:2.5rem;margin-top:2rem}.contact-stage .contact-aside{padding-top:1rem;gap:1.5rem}.contact-stage .contact-aside .contact-plain-title{font-size:clamp(3.4rem,12vw,6rem)}}
