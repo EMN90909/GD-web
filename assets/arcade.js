@@ -5,8 +5,9 @@ function mount(){
  cleanup();
  const stage=document.querySelector('#arcade-stage');
  if(!stage)return;
- const canvas=stage.querySelector('canvas'),ctx=canvas.getContext('2d'),start=stage.querySelector('.arcade-start'),jumpBtn=stage.querySelector('.arcade-jump'),scoreEl=stage.querySelector('.arcade-score'),message=stage.querySelector('.arcade-message');
- if(!ctx)return;
+ const canvas=stage.querySelector('canvas'),start=stage.querySelector('.arcade-start'),jumpBtn=stage.querySelector('.arcade-jump'),scoreEl=stage.querySelector('.arcade-score'),message=stage.querySelector('.arcade-message');
+ if(!canvas||!start||!jumpBtn||!scoreEl||!message)return;
+ const ctx=canvas.getContext('2d');if(!ctx)return;
  const W=720,H=330,ground=260,player={x:96,y:0,w:37,h:43,vy:0},gravity=1850,jumpVelocity=-690;
  let running=false,over=false,score=0,speed=280,obstacles=[],spawnIn=1,frame=0,raf=0,last=0,visible=true,countdownTimer=0,phase='idle';const finale=stage.closest('.contact-finale');
  const rand=(a,b)=>a+Math.random()*(b-a);
@@ -47,6 +48,6 @@ function mount(){
  start.addEventListener('click',onStart);jumpBtn.addEventListener('click',onJump);canvas.addEventListener('pointerdown',onCanvas);window.addEventListener('keydown',onKey);observer.observe(stage);draw();
  cleanup=()=>{running=false;clearInterval(countdownTimer);setPhase('idle');cancelAnimationFrame(raf);observer.disconnect();start.removeEventListener('click',onStart);jumpBtn.removeEventListener('click',onJump);canvas.removeEventListener('pointerdown',onCanvas);window.removeEventListener('keydown',onKey)};
 }
-document.addEventListener('DOMContentLoaded',mount);
-window.addEventListener('hashchange',()=>setTimeout(mount,80));
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
+document.addEventListener('acelden:page-ready',mount);
 })();
