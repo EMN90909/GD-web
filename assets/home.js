@@ -6,6 +6,7 @@ export function mountHome(){
  unmount();
  const home=document.querySelector('.studio-home');
  if(!home)return;
+ home.classList.add('sh-animated');
  const clean=[];
  const hero=home.querySelector('.sh-hero');
  const sticky=home.querySelector('.sh-hero-sticky');

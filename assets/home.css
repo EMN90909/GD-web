@@ -11,8 +11,8 @@ body:has(.studio-home) .nav{background:#050505;border:0;height:68px;padding-inli
 body:has(.studio-home) .nav .logo{font-size:clamp(1.2rem,2vw,1.7rem);letter-spacing:-.07em}
 body:has(.studio-home) .nav .links{font-size:.68rem;gap:clamp(1rem,2.3vw,2.5rem)}
 body:has(.studio-home) .studio-footer{background:#050505;color:white;border-top:1px solid #383838}
-.studio-home .sh-reveal{opacity:0;transform:translateY(54px);transition:opacity .9s ease,transform .9s cubic-bezier(.18,.82,.24,1)}
-.studio-home .sh-reveal.sh-in{opacity:1;transform:translateY(0)}
+.studio-home.sh-animated .sh-reveal{opacity:0;transform:translateY(54px);transition:opacity .9s ease,transform .9s cubic-bezier(.18,.82,.24,1)}
+.studio-home.sh-animated .sh-reveal.sh-in{opacity:1;transform:translateY(0)}
 /* Multi-screen pinned hero */
 .studio-home .sh-hero{height:220svh;position:relative;background:#050505}
 .studio-home .sh-hero-sticky{position:sticky;top:0;isolation:isolate;height:100svh;min-height:600px;overflow:hidden}
