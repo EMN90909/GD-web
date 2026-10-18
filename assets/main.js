@@ -7,6 +7,9 @@ document.addEventListener('acelden:page-ready', () => {
  window.__aceldenSpringUnmount?.();
  if (document.querySelector('.studio-home') ||
      matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+ // Do not load React or React Spring on static legal/auxiliary pages without
+ // any enhanced surfaces. The rest of the website stays dependency-free.
+ if (!document.querySelector('.about-media,.about-chapter .pill,.about-text-link,.founder-frame,.engine-showcase-art,.projects-roadmap .service,.projects-copy .pill,.services-page .service,.services-outro .pill,.contact-form-motion,.value-grid article,.editorial-art,.page-section .btn,.page-hero .btn,.privacy-end a')) return;
  if (!document.querySelector('link[data-acelden-spring]')) {
    const sheet = document.createElement('link');
    sheet.rel = 'stylesheet';

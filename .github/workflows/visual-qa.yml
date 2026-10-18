@@ -1,17 +1,7 @@
 name: Acelden visual QA
+# Manual until GitHub Actions runners are available for this account.
+# The first run failed before any job steps or logs were recorded.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'index.html'
-      - 'assets/**'
-      - 'about.html'
-      - 'team.html'
-      - 'projects.html'
-      - 'services.html'
-      - 'contact.html'
-      - 'scripts/visual-qa.mjs'
-      - '.github/workflows/visual-qa.yml'
   workflow_dispatch:
 permissions:
   contents: read

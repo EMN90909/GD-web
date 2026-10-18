@@ -22,11 +22,16 @@ export function mountHome(){
   if(!orbit?.classList.contains('sh-orbit-ready')||!orbitStage)return;
   const bounds=orbit.getBoundingClientRect();
   const travel=Math.max(1,bounds.height-window.innerHeight);
-  const progress=clamp(-bounds.top/travel);
+  // A short dwell at both ends lets visitors read the first and last
+  // service without the portfolio appearing the instant the final card arrives.
+  const progress=clamp((clamp(-bounds.top/travel)-.06)/.86);
   const position=progress*(orbitCards.length-1);
   const focus=Math.min(orbitCards.length-1,Math.max(0,Math.round(position)));
   const radiusX=Math.min(orbitStage.clientWidth*(window.innerWidth<761?.30:.29),365);
-  const radiusY=Math.min(orbitStage.clientHeight*(window.innerWidth<761?.27:.28),155);
+  // Keep the focused (front) card fully inside even on short laptop screens.
+  const cardHeight=Math.max(...orbitCards.map(card=>card.offsetHeight||205));
+  const verticalRoom=Math.max(0,(orbitStage.clientHeight-cardHeight)/2-14);
+  const radiusY=Math.min(orbitStage.clientHeight*(window.innerWidth<761?.24:.25),145,verticalRoom);
   orbitCards.forEach((card,i)=>{
    const theta=(i-position)*(2*Math.PI/orbitCards.length);
    const front=Math.cos(theta);
