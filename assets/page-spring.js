@@ -69,6 +69,14 @@ function MotionTarget({ node, draggable }) {
       if (drag) {
         const dx = clamp(event.clientX - drag.x, -48, 48);
         const dy = clamp(event.clientY - drag.y, -36, 36);
+        if (drag.touch && !drag.active) {
+          // Let ordinary vertical touch gestures scroll the page normally.
+          if (Math.abs(dy) > Math.abs(dx) * 1.2) { drag = null; return; }
+          if (Math.abs(dx) < 10) return;
+          drag.active = true;
+          node.classList.add('acelden-spring-grabbing');
+          try { node.setPointerCapture(event.pointerId); } catch (_) {}
+        }
         api.start({ x: dx, y: dy, lift: -4, tilt: dx / 20, scale: 1.035, glint: .35,
           config: { tension: 380, friction: 27 } });
         return;
@@ -82,11 +90,15 @@ function MotionTarget({ node, draggable }) {
         y: relativeY * 2, lift: -7, scale: 1.018, glint: .25 });
     };
     const down = event => {
-      if (!draggable || (event.pointerType !== 'mouse' && event.pointerType !== 'pen')
-        || event.button !== 0 || event.target.closest('a,button,input,textarea,select,[role="button"]')) return;
-      drag = { x: event.clientX, y: event.clientY, id: event.pointerId };
-      node.classList.add('acelden-spring-grabbing');
-      try { node.setPointerCapture(event.pointerId); } catch (_) {}
+      if (!draggable || !['mouse', 'pen', 'touch'].includes(event.pointerType)
+        || (event.pointerType !== 'touch' && event.button !== 0)
+        || event.target.closest('a,button,input,textarea,select,[role="button"]')) return;
+      const touch = event.pointerType === 'touch';
+      drag = { x: event.clientX, y: event.clientY, id: event.pointerId, touch, active: !touch };
+      if (!touch) {
+        node.classList.add('acelden-spring-grabbing');
+        try { node.setPointerCapture(event.pointerId); } catch (_) {}
+      }
     };
     const up = event => {
       if (!drag) return;
