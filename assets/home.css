@@ -1,0 +1,170 @@
+/* Acelden landing page only. Adapted from the motion and composition of the
+   supplied UmpaUmpa Wix Studio mobile screen recording. No Wix template assets. */
+.studio-home{background:#050505;color:#fff;overflow:clip}
+.studio-home .sh-kicker{display:block;font:700 clamp(.55rem,.78vw,.76rem)/1.5 'DM Sans',sans-serif;letter-spacing:.13em;text-transform:uppercase}
+.studio-home .sh-pill{display:inline-flex;align-items:center;justify-content:center;gap:2rem;min-height:47px;margin:0;padding:13px 25px;border-radius:99px;background:#f7f7f4;color:#080808;font-size:.69rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;transition:transform .25s,background .25s,color .25s}
+.studio-home .sh-pill:hover{transform:translateY(-3px);background:#c5fb86}
+.studio-home .sh-pill:focus-visible,.studio-home .sh-quote-controls button:focus-visible,.studio-home .sh-project:focus-visible{outline:3px solid #c4ff69;outline-offset:5px}
+.studio-home h2{margin:0;line-height:.99;font-size:clamp(2.1rem,5vw,5.7rem);font-weight:800;letter-spacing:-.065em}
+.studio-home p{line-height:1.5}
+body:has(.studio-home) .nav{background:#050505;border:0;height:68px;padding-inline:clamp(22px,3.5vw,65px)}
+body:has(.studio-home) .nav .logo{font-size:clamp(1.2rem,2vw,1.7rem);letter-spacing:-.07em}
+body:has(.studio-home) .nav .links{font-size:.68rem;gap:clamp(1rem,2.3vw,2.5rem)}
+body:has(.studio-home) .studio-footer{background:#050505;color:white;border-top:1px solid #383838}
+.studio-home .sh-reveal{opacity:0;transform:translateY(54px);transition:opacity .9s ease,transform .9s cubic-bezier(.18,.82,.24,1)}
+.studio-home .sh-reveal.sh-in{opacity:1;transform:translateY(0)}
+/* Multi-screen pinned hero */
+.studio-home .sh-hero{height:220svh;position:relative;background:#050505}
+.studio-home .sh-hero-sticky{position:sticky;top:0;isolation:isolate;height:100svh;min-height:600px;overflow:hidden}
+.studio-home .sh-hero-copy{position:absolute;z-index:3;top:13%;left:3%;width:94%;text-align:center;pointer-events:none}
+.studio-home .sh-hero-copy h1{position:relative;max-width:1150px;margin:22px auto 19px;font-size:clamp(2.8rem,5.6vw,6.85rem);line-height:.99;letter-spacing:-.073em;font-weight:800;text-wrap:balance;text-shadow:0 2px 24px #0006}
+.studio-home .sh-hero-copy h1 span{color:#fff}
+.studio-home .sh-hero-copy .sh-pill{pointer-events:auto}
+.studio-home .sh-collage{position:absolute;inset:0;z-index:2;pointer-events:none}
+.studio-home .sh-story{position:absolute;overflow:hidden;border:1px solid #ffffff37;border-radius:10px;box-shadow:0 22px 60px #0008;will-change:transform}
+.studio-home .sh-story-main{left:50%;top:48%;width:clamp(225px,24vw,390px);height:clamp(350px,40vw,590px);transform:translate3d(-50%,calc((1 - var(--sh-main,1))*83vh),0);background:#2e233d;display:flex;flex-direction:column}
+.studio-home .sh-story-top,.studio-home .sh-story-bottom{position:relative;z-index:2;display:flex;align-items:center;gap:8px;padding:10px 12px;background:#0c090a7d;color:#fff;font-size:.57rem;letter-spacing:.07em}
+.studio-home .sh-story-top .sh-story-avatar{background:#b8ff54;border-radius:50%;color:#101010;display:grid;place-items:center;width:19px;height:19px;font-weight:900}
+.studio-home .sh-story-top .sh-cross{font-size:1.2rem;margin-left:auto;font-weight:300}
+.studio-home .sh-story-image{flex:1;min-height:0;background:url('realm.svg') center / cover no-repeat;filter:saturate(1.1)}
+.studio-home .sh-story-bottom{justify-content:space-between;min-height:39px}
+.studio-home .sh-story-bottom strong{font-size:.55rem}
+.studio-home .sh-story-left{left:calc(50% - clamp(210px,20vw,340px));top:65%;width:clamp(145px,16vw,245px);height:clamp(220px,23vw,350px);background:linear-gradient(142deg,#aba994,#6c6d72 54%,#222734);transform:rotate(-7deg) translate3d(0,calc((1 - var(--sh-left,1))*90vh),0)}
+.studio-home .sh-small-label,.studio-home .sh-small-bottom{position:absolute;z-index:1;left:10px;font-size:.53rem;letter-spacing:.08em;font-weight:800;color:white;text-shadow:0 2px 6px #0008}
+.studio-home .sh-small-label{top:12px}.studio-home .sh-small-bottom{bottom:12px}
+.studio-home .sh-left-object{position:absolute;top:19%;left:14%;width:80%;height:66%;border:7px solid #181a1e;border-radius:18px;transform:rotate(12deg);background:linear-gradient(140deg,#9ae7ff 5%,#5275b0 40%,#1c344e 100%);box-shadow:18px 15px 22px #0007}
+.studio-home .sh-left-object:before{content:'';position:absolute;inset:5px;border:1px solid #f5fff799;border-radius:9px}
+.studio-home .sh-object-glow{position:absolute;inset:9%;border-radius:50%;background:radial-gradient(circle,#c8fc5b 0 9%,#3be4e440 30%,transparent 63%);filter:blur(7px)}
+.studio-home .sh-object-core{position:absolute;top:35%;left:20%;font-size:clamp(1.1rem,3vw,3.3rem);font-weight:900;letter-spacing:-.12em;color:white;text-shadow:0 4px 10px #0008}
+.studio-home .sh-object-core span{color:#b7ff54}
+.studio-home .sh-story-right{left:calc(50% + clamp(125px,13vw,215px));top:62%;width:clamp(145px,16vw,250px);height:clamp(218px,23vw,350px);background:radial-gradient(circle at 70% 40%,#ec644e,#9e2227 80%);transform:rotate(9deg) translate3d(0,calc((1 - var(--sh-right,1))*85vh),0)}
+.studio-home .sh-story-right:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,#ffaf9512 0 2px,transparent 2px 12px),repeating-linear-gradient(45deg,#ffaf9520 0 2px,transparent 2px 12px)}
+.studio-home .sh-grid-label,.studio-home .sh-grid-mark{position:absolute;z-index:2;left:13px;font-size:.55rem;letter-spacing:.07em;font-weight:800}.studio-home .sh-grid-label{top:13px}.studio-home .sh-grid-mark{bottom:13px}
+.studio-home .sh-red-device{position:absolute;left:15%;top:29%;width:73%;height:57%;border:7px solid #ff614b;border-radius:25px;transform:rotate(-14deg);box-shadow:12px 13px 0 #7a1b22,0 22px 25px #14050855}
+.studio-home .sh-red-device i{position:absolute;top:25%;right:14%;display:block;width:18px;height:54px;border-radius:20px;background:#330b13;box-shadow:inset 2px 1px 4px #0009}
+.studio-home .sh-giant-mark{position:absolute;z-index:4;left:50%;top:73%;width:max-content;max-width:none;white-space:nowrap;font-weight:800;line-height:1;font-size:clamp(7.3rem,19vw,25rem);letter-spacing:-.09em;pointer-events:none;transform:translate3d(calc(-50% + (1 - var(--sh-word,1))*52vw),calc((1 - var(--sh-word,1))*38vh),0);opacity:var(--sh-word,1);text-shadow:0 3px 18px #0006}
+.studio-home .sh-giant-mark span{color:#b7ff54}
+.studio-home .sh-hero-bottom{position:absolute;z-index:5;left:4%;right:4%;bottom:2.2rem;display:flex;justify-content:space-between;font-size:.62rem;font-weight:800;letter-spacing:.12em;pointer-events:none}
+.studio-home .sh-hero-bottom span:first-child{background:#050505d1;padding:5px}
+/* Teal / violet atmospheric about panel */
+.studio-home .sh-about{position:relative;overflow:hidden;isolation:isolate;min-height:clamp(560px,66vw,850px);background:#193a3e;display:grid;place-items:center;padding:110px 5%;text-align:center}
+.studio-home .sh-about:before{content:'';position:absolute;inset:-30%;z-index:-2;background:radial-gradient(ellipse at 72% 63%,#663d75 0,transparent 36%),radial-gradient(ellipse at 15% 25%,#395f6c 0,transparent 42%),linear-gradient(130deg,#1c4647,#202b47 70%);filter:saturate(1.2)}
+.studio-home .sh-about-art{position:absolute;inset:0;overflow:hidden;z-index:-1;opacity:.6}
+.studio-home .sh-about-art i{position:absolute;display:block;width:27%;height:190%;top:-45%;left:12%;background:linear-gradient(90deg,#80a4a31a,#e09aee29 30%,#42235b77 52%,#62a5b21a);transform:rotate(46deg) skewY(-9deg);filter:blur(3px);border-radius:90px}
+.studio-home .sh-about-art i:nth-child(2){left:50%;transform:rotate(42deg);opacity:.6}.studio-home .sh-about-art i:nth-child(3){left:90%;opacity:.4;transform:rotate(33deg)}
+.studio-home .sh-about-inner{max-width:780px}
+.studio-home .sh-about h2{font-size:clamp(2.1rem,4.8vw,5rem);margin:23px 0 25px}
+.studio-home .sh-about h2 span{color:#f3f4eb}
+.studio-home .sh-about p{max-width:620px;font-size:clamp(.87rem,1.15vw,1rem);margin:0 auto 28px;line-height:1.75;letter-spacing:.02em}
+.studio-home .sh-orbit{background:#f6f6f4;color:#080808;text-align:center;padding:76px 5% 85px}
+.studio-home .sh-orbit h2{font-size:clamp(1.8rem,3.3vw,3.4rem);margin:15px 0 55px}
+.studio-home .sh-orbit-grid{display:flex;flex-wrap:wrap;justify-content:space-evenly;align-items:center;gap:40px 32px;max-width:1150px;margin:auto}
+.studio-home .sh-orbit-grid span{font-size:clamp(1.3rem,2.2vw,2.6rem);font-weight:800;letter-spacing:-.065em}
+.studio-home .sh-orbit-grid span:nth-child(2){font-size:clamp(1.1rem,1.85vw,2.1rem);font-weight:600}
+.studio-home .sh-orbit-note{font-size:.68rem;letter-spacing:.04em;margin:38px 0 0;color:#626562}
+/* Black vertical service menu inspired by the reference's silver icons */
+.studio-home .sh-services{background:#030303;padding:115px 5% 105px;text-align:center}
+.studio-home .sh-section-heading{text-align:center}
+.studio-home .sh-section-heading h2{font-size:clamp(2.3rem,4.5vw,5.2rem);margin:17px 0 55px}
+.studio-home .sh-service-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:60px 80px;max-width:850px;margin:0 auto}
+.studio-home .sh-service{display:flex;flex-direction:column;align-items:center}
+.studio-home .sh-service-icon{width:65px;height:65px;display:grid;place-items:center;font-size:3rem;color:#e4f2ee;text-shadow:0 4px 2px #182422,0 -2px 4px #e9fcff;filter:drop-shadow(0 10px 17px #a7d6ff45);margin-bottom:14px}
+.studio-home .sh-service h3{margin:6px 0 9px;font-size:.8rem;letter-spacing:.06em;line-height:1.45}
+.studio-home .sh-service p{font-size:.79rem;line-height:1.65;color:#c5c7c6;max-width:315px;margin:0}
+.studio-home .sh-text-link{display:inline-block;font-size:.73rem;letter-spacing:.09em;font-weight:800;border-bottom:1px solid #a6ff60;padding-bottom:8px;margin-top:65px}
+.studio-home .sh-text-link:hover{color:#b7ff54}
+/* Soft mauve portfolio with big editorial frames */
+.studio-home .sh-portfolio{position:relative;background:#3b2b37;padding:85px 5% 90px;isolation:isolate;overflow:hidden}
+.studio-home .sh-portfolio:before{content:'';inset:0;position:absolute;z-index:-1;background:radial-gradient(ellipse at 90% 70%,#82516d77,transparent 56%),repeating-linear-gradient(155deg,transparent 0 170px,#d3b0c00c 170px 178px,transparent 178px 230px)}
+.studio-home .sh-portfolio-inner{max-width:1320px;margin:auto}
+.studio-home .sh-portfolio .sh-section-heading h2{margin-bottom:45px}
+.studio-home .sh-portfolio-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:25px}
+.studio-home .sh-project{display:block;min-width:0;transition:transform .4s}
+.studio-home .sh-project:hover{transform:translateY(-6px)}
+.studio-home .sh-project-art{position:relative;overflow:hidden;aspect-ratio:1/1.05;background:#181c1b}
+.studio-home .sh-project-engine{display:grid;place-items:center;background:radial-gradient(circle at 68% 35%,#5b725f,#17221d 70%);padding:9%}
+.studio-home .sh-editor-window{width:95%;height:82%;background:#171a1a;border:1px solid #708378;border-radius:10px;transform:perspective(1200px) rotateY(-9deg) rotateX(6deg);box-shadow:25px 30px 35px #0008;overflow:hidden}
+.studio-home .sh-editor-bar{display:flex;align-items:center;gap:5px;height:28px;background:#303733;padding:0 13px}.studio-home .sh-editor-bar span{width:6px;height:6px;border-radius:50%;background:#8cb5a0}.studio-home .sh-editor-bar b{margin-left:auto;font-size:.46rem;letter-spacing:.12em}
+.studio-home .sh-editor-layout{display:grid;grid-template-columns:17% 1fr 18%;height:calc(100% - 28px)}
+.studio-home .sh-editor-side,.studio-home .sh-editor-inspector{padding:15px 7px;background:#242d28;border-right:1px solid #435246}.studio-home .sh-editor-inspector{border-right:0;border-left:1px solid #435246}
+.studio-home .sh-editor-side i,.studio-home .sh-editor-inspector i{display:block;height:5px;background:#719174;margin:0 0 13px;opacity:.55;border-radius:2px}
+.studio-home .sh-editor-side i:nth-child(2){width:70%}.studio-home .sh-editor-side i:nth-child(3){width:90%}.studio-home .sh-editor-inspector i:nth-child(2){width:65%}
+.studio-home .sh-editor-view{background:linear-gradient(0deg,#132419,#28392f);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.studio-home .sh-editor-view:before{content:'';position:absolute;inset:-120%;background:repeating-linear-gradient(0deg,transparent 0 36px,#aafc7429 36px 37px),repeating-linear-gradient(90deg,transparent 0 36px,#aafc7429 36px 37px);transform:perspective(350px) rotateX(60deg) scale(1.8)}
+.studio-home .sh-editor-orbit{position:absolute;width:57%;aspect-ratio:1;border-radius:50%;border:2px solid #b7ff5499;box-shadow:0 0 65px #b7ff5450}
+.studio-home .sh-editor-view strong{position:relative;font-size:clamp(2.3rem,6vw,7rem);letter-spacing:-.11em;line-height:1}.studio-home .sh-editor-view strong span{color:#b7ff54}
+.studio-home .sh-editor-view small{position:relative;margin-top:12px;font-size:.5rem;letter-spacing:.2em}
+.studio-home .sh-project-world img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s}.studio-home .sh-project:hover img{transform:scale(1.04)}
+.studio-home .sh-world-stamp{position:absolute;bottom:5%;left:5%;font-weight:900;font-size:clamp(1.5rem,3vw,3.4rem);line-height:.9;letter-spacing:-.07em;text-shadow:0 4px 12px #000b}
+.studio-home .sh-project-title{display:flex;justify-content:space-between;gap:20px;align-items:baseline;padding:17px 0 22px}
+.studio-home .sh-project-title h3{font-size:clamp(.95rem,1.7vw,1.5rem);letter-spacing:-.035em;margin:0}.studio-home .sh-project-title span{font-size:.58rem;letter-spacing:.06em}
+.studio-home .sh-portfolio-cta{display:flex;width:max-content;margin:36px auto 0}
+/* White editorial studio notes, not fabricated customer testimonials */
+.studio-home .sh-manifesto{background:#f7f7f6;color:#111;padding:92px 5% 82px;text-align:center}
+.studio-home .sh-manifesto h2{font-size:clamp(1.75rem,3.6vw,3.5rem);margin:14px 0 37px}
+.studio-home .sh-quote{max-width:810px;margin:auto;min-height:138px}
+.studio-home .sh-quote blockquote{font-size:clamp(1.05rem,1.7vw,1.6rem);font-weight:500;line-height:1.6;margin:0 0 20px}
+.studio-home .sh-quote-source{font-size:.62rem;font-weight:800;letter-spacing:.1em}
+.studio-home .sh-quote-controls{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:25px}
+.studio-home .sh-quote-controls button{display:grid;place-items:center;border:0;width:38px;height:38px;border-radius:50%;background:#fff;color:#111;box-shadow:0 2px 12px #0001;cursor:pointer;transition:background .2s,transform .2s}
+.studio-home .sh-quote-controls button:hover{background:#c5ff75;transform:scale(1.07)}
+.studio-home .sh-quote-controls span{font-size:.65rem;font-weight:800;letter-spacing:.1em}
+/* Existing mini arcade preserved; contact panel gets the recording's coral accent */
+.studio-home .contact-finale{background:#050505;padding-top:88px;padding-bottom:115px}
+.studio-home .contact-finale .finale-copy{background:#f04232;color:#0b0a0a;padding:clamp(25px,4vw,68px);border-radius:18px;align-self:stretch}
+.studio-home .contact-finale .finale-copy h2{font-size:clamp(3.4rem,6.9vw,8.1rem);margin:0 0 25px}
+.studio-home .contact-finale .finale-copy h2 em{color:#f6eadf}
+.studio-home .contact-finale .finale-copy p{max-width:420px;color:#14100e}
+.studio-home .contact-finale .finale-link{color:#080808;border-color:#080808}
+.studio-home .contact-finale .finale-link:hover{color:#fff}
+/* One-column mobile replica: card collage fills the screen, then narrow stacked sections */
+@media(max-width:760px){
+ body:has(.studio-home) .nav{height:64px;padding:0 18px}
+ body:has(.studio-home) .nav .menu{font-size:.66rem;border-radius:50px;padding:9px 12px;border-color:#777}
+ body:has(.studio-home) .nav .links{top:64px}
+ .studio-home .sh-hero{height:230svh}
+ .studio-home .sh-hero-sticky{min-height:520px}
+ .studio-home .sh-hero-copy{top:15%;left:4%;width:92%}
+ .studio-home .sh-hero-copy .sh-kicker{font-size:.51rem}
+ .studio-home .sh-hero-copy h1{font-size:clamp(1.95rem,7.6vw,3.2rem);line-height:1.02;letter-spacing:-.061em;margin:13px auto 16px}
+ .studio-home .sh-pill{font-size:.6rem;min-height:42px;padding:11px 22px;gap:16px}
+ .studio-home .sh-story-main{top:45%;left:51%;width:58vw;height:58svh;max-height:490px;min-height:275px}
+ .studio-home .sh-story-left{top:67%;left:8%;width:32vw;height:36svh;min-height:160px}
+ .studio-home .sh-story-right{top:61%;left:70%;width:33vw;height:35svh;min-height:160px}
+ .studio-home .sh-giant-mark{top:78%;font-size:clamp(5rem,20.5vw,10rem)}
+ .studio-home .sh-hero-bottom{left:5%;right:5%;bottom:20px;font-size:.52rem}
+ .studio-home .sh-hero-bottom span:last-child{max-width:130px;text-align:right;line-height:1.4}
+ .studio-home .sh-story-top,.studio-home .sh-story-bottom{font-size:.43rem;padding:6px 7px}
+ .studio-home .sh-story-top .sh-story-avatar{width:14px;height:14px}
+ .studio-home .sh-story-bottom strong,.studio-home .sh-grid-label,.studio-home .sh-grid-mark,.studio-home .sh-small-label,.studio-home .sh-small-bottom{font-size:.4rem}
+ .studio-home .sh-red-device{border-width:4px}
+ .studio-home .sh-about{min-height:520px;padding:95px 7%}
+ .studio-home .sh-about h2{font-size:clamp(1.8rem,7.5vw,3rem)}
+ .studio-home .sh-about p{font-size:.84rem}
+ .studio-home .sh-orbit{padding:65px 7% 74px}
+ .studio-home .sh-orbit h2{margin-bottom:45px}
+ .studio-home .sh-orbit-grid{gap:28px}
+ .studio-home .sh-orbit-grid span{flex:1 0 36%;font-size:clamp(1.2rem,5.1vw,2rem)}
+ .studio-home .sh-services{padding:90px 7% 100px}
+ .studio-home .sh-section-heading h2{font-size:clamp(2rem,8.5vw,3.7rem)}
+ .studio-home .sh-service-list{grid-template-columns:1fr;gap:50px}
+ .studio-home .sh-service p{max-width:300px}
+ .studio-home .sh-portfolio{padding:75px 5%}
+ .studio-home .sh-portfolio-grid{grid-template-columns:1fr;gap:27px}
+ .studio-home .sh-project-title{padding:12px 0}
+ .studio-home .sh-project-title span{max-width:47%;text-align:right}
+ .studio-home .sh-manifesto{padding:75px 7%}
+ .studio-home .sh-quote{min-height:160px}
+ .studio-home .contact-finale{padding:70px 5% 80px}
+ .studio-home .contact-finale .finale-copy h2{font-size:clamp(3rem,11vw,5rem)}
+}
+@media(max-width:390px){.studio-home .sh-hero-copy{top:13%}.studio-home .sh-story-main{top:46%;height:51svh}.studio-home .sh-giant-mark{top:79%}.studio-home .sh-hero-bottom span:last-child{font-size:.45rem}}
+@media(prefers-reduced-motion:reduce){
+ .studio-home .sh-hero{height:100svh;min-height:650px}
+ .studio-home .sh-hero-sticky{position:relative}
+ .studio-home .sh-story,.studio-home .sh-giant-mark{transform:none!important;will-change:auto}
+ .studio-home .sh-story-main{transform:translateX(-50%)!important}
+ .studio-home .sh-giant-mark{transform:translateX(-50%)!important;opacity:1}
+ .studio-home .sh-reveal{opacity:1;transform:none}
+ .studio-home .sh-pill,.studio-home .sh-project,.studio-home .sh-quote-controls button{transition:none}
+}
