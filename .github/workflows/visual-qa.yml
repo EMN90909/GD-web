@@ -1,0 +1,47 @@
+name: Acelden visual QA
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/**'
+      - 'about.html'
+      - 'team.html'
+      - 'projects.html'
+      - 'services.html'
+      - 'contact.html'
+      - 'scripts/visual-qa.mjs'
+      - '.github/workflows/visual-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: visual-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  browser-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Start Acelden static preview
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/acelden-server.log 2>&1 &
+          sleep 2
+          curl --fail http://127.0.0.1:8765/ >/dev/null
+      - name: Verify desktop, mobile, scroll and spring interactions
+        run: node scripts/visual-qa.mjs
+      - name: Upload screenshots and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acelden-visual-qa
+          path: artifacts/ui-qa/
+          if-no-files-found: warn
