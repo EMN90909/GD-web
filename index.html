@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090a09"><meta name="description" content="Acelden is an independent game development studio exploring Roblox games, future worlds and NoeEngine."><title>Game development studio | Acelden</title><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/home.css"><script src="assets/main.js" defer></script></head><body><a href="#main" class="skip">Skip to content</a><header class="nav"><a class="logo" href="#/">Acelden<b>.</b></a><button class="menu" aria-label="Toggle navigation" aria-expanded="false">MENU ☰</button><nav class="links"><a href="#/about">ABOUT</a><a href="#/projects">PROJECTS</a><a href="#/services">WHAT WE DO</a><a href="#/team">FOUNDERS</a><a href="#/contact">CONTACT ↗</a></nav></header>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090a09"><meta name="description" content="Acelden is an independent game development studio exploring Roblox games, future worlds and NoeEngine."><title>Game development studio | Acelden</title><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/home.css"><link rel="stylesheet" href="assets/orbit.css"><script src="assets/main.js" defer></script></head><body><a href="#main" class="skip">Skip to content</a><header class="nav"><a class="logo" href="#/">Acelden<b>.</b></a><button class="menu" aria-label="Toggle navigation" aria-expanded="false">MENU ☰</button><nav class="links"><a href="#/about">ABOUT</a><a href="#/projects">PROJECTS</a><a href="#/services">WHAT WE DO</a><a href="#/team">FOUNDERS</a><a href="#/contact">CONTACT ↗</a></nav></header>
 <main id="main" class="studio-home">
   <section class="sh-hero" aria-labelledby="sh-hero-title">
     <div class="sh-hero-sticky">
@@ -44,15 +44,49 @@
     <p class="sh-orbit-note">Our projects and tools, not a list of client endorsements.</p>
   </section>
 
-  <section class="sh-services" aria-labelledby="sh-services-title">
-    <div class="sh-section-heading sh-reveal"><span class="sh-kicker">WHAT WE DO</span><h2 id="sh-services-title">NOT JUST<br>BUTTON MASHERS.</h2></div>
-    <div class="sh-service-list">
-      <article class="sh-service sh-reveal"><span class="sh-service-icon" aria-hidden="true">✦</span><h3>ROBLOX EXPERIENCES</h3><p>Play-first concepts built for discovery, community and the joy of one more round.</p></article>
-      <article class="sh-service sh-reveal"><span class="sh-service-icon" aria-hidden="true">◈</span><h3>ORIGINAL WORLDS</h3><p>Characters, stories and places with their own rules, atmosphere and reasons to explore.</p></article>
-      <article class="sh-service sh-reveal"><span class="sh-service-icon" aria-hidden="true">✳</span><h3>ENGINE &amp; TOOLS</h3><p>Experimenting with NoeEngine and creative technology that makes ambitious ideas possible.</p></article>
-      <article class="sh-service sh-reveal"><span class="sh-service-icon" aria-hidden="true">⌘</span><h3>INTERACTIVE PROTOTYPES</h3><p>Turning a promising what-if into something you can actually move through and play.</p></article>
+  <section class="sh-services sh-service-sequence" id="home-services" aria-labelledby="sh-services-title">
+    <div class="sh-orbit-pin">
+      <div class="sh-orbit-header">
+        <span class="sh-kicker">WHAT WE DO / ACELDEN</span>
+        <h2 id="sh-services-title">IDEAS IN <em>ORBIT.</em></h2>
+        <p>Four ways we're shaping the next playable thing.</p>
+      </div>
+      <div class="sh-ring-stage" aria-label="A circular carousel of Acelden's creative services">
+        <div class="sh-ring-track" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="sh-ring-hub" aria-hidden="true"><span>A<span class="sh-lime">.</span></span><small>CREATE / PLAY</small></div>
+        <div class="sh-orbit-cards">
+          <button class="sh-orbit-card" type="button" data-orbit-card="0" aria-label="Show Roblox experiences">
+            <span class="sh-orbit-card-top"><span>✦</span><span>01 / 04</span></span>
+            <strong>ROBLOX<br>EXPERIENCES</strong>
+            <span class="sh-orbit-card-description">Play-first concepts built for discovery, community and the joy of one more round.</span>
+            <span class="sh-orbit-card-foot">DISCOVER THE POSSIBILITIES <span aria-hidden="true">↗</span></span>
+          </button>
+          <button class="sh-orbit-card" type="button" data-orbit-card="1" aria-label="Show original worlds">
+            <span class="sh-orbit-card-top"><span>◈</span><span>02 / 04</span></span>
+            <strong>ORIGINAL<br>WORLDS</strong>
+            <span class="sh-orbit-card-description">Characters, stories and places with their own rules, atmosphere and reasons to explore.</span>
+            <span class="sh-orbit-card-foot">BUILD THE UNEXPECTED <span aria-hidden="true">↗</span></span>
+          </button>
+          <button class="sh-orbit-card" type="button" data-orbit-card="2" aria-label="Show engine and tools">
+            <span class="sh-orbit-card-top"><span>✳</span><span>03 / 04</span></span>
+            <strong>ENGINE<br>&amp; TOOLS</strong>
+            <span class="sh-orbit-card-description">Experimenting with NoeEngine and creative technology that makes ambitious ideas possible.</span>
+            <span class="sh-orbit-card-foot">POWER THE NEXT WORLD <span aria-hidden="true">↗</span></span>
+          </button>
+          <button class="sh-orbit-card" type="button" data-orbit-card="3" aria-label="Show interactive prototypes">
+            <span class="sh-orbit-card-top"><span>⌘</span><span>04 / 04</span></span>
+            <strong>INTERACTIVE<br>PROTOTYPES</strong>
+            <span class="sh-orbit-card-description">Turning a promising what-if into something you can actually move through and play.</span>
+            <span class="sh-orbit-card-foot">MAKE IT PLAYABLE <span aria-hidden="true">↗</span></span>
+          </button>
+        </div>
+      </div>
+      <div class="sh-orbit-bottom">
+        <span class="sh-orbit-hint">SCROLL TO ROTATE <span aria-hidden="true">↓</span></span>
+        <div class="sh-orbit-progress" role="progressbar" aria-label="Services explored" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1"><span></span></div>
+        <span class="sh-orbit-count" aria-live="off">01 / 04</span>
+      </div>
     </div>
-    <a class="sh-text-link" href="#/services">EXPLORE WHAT WE DO <span aria-hidden="true">↗</span></a>
   </section>
 
   <section class="sh-portfolio" aria-labelledby="sh-portfolio-title">
