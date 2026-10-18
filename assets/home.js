@@ -21,8 +21,13 @@ export function mountHome(){
   sticky.style.setProperty('--sh-main',String(ease(p/.39)));
   sticky.style.setProperty('--sh-left',String(ease((p-.12)/.38)));
   sticky.style.setProperty('--sh-right',String(ease((p-.21)/.36)));
-  sticky.style.setProperty('--sh-word',String(ease((p-.18)/.35)));
-  sticky.style.setProperty('--sh-word-exit',String(ease((p-.58)/.28)));
+  // The name is visible on arrival; scrolling moves it only along Y.
+  // Fade starts before the rising wordmark can obscure the main heading.
+  const wordProgress=clamp(p/.78);
+  const wordRise=Math.round(wordProgress*Math.min(window.innerHeight*.72,700));
+  const wordOpacity=1-ease((p-.18)/.46);
+  sticky.style.setProperty('--sh-word-rise',wordRise+'px');
+  sticky.style.setProperty('--sh-word-opacity',String(wordOpacity));
  }
  const schedule=()=>{if(!raf)raf=window.requestAnimationFrame(update)};
  if(!prefersReduced.matches){

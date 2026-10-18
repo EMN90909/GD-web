@@ -42,7 +42,9 @@ body:has(.studio-home) .studio-footer{background:#050505;color:white;border-top:
 .studio-home .sh-grid-label,.studio-home .sh-grid-mark{position:absolute;z-index:2;left:13px;font-size:.55rem;letter-spacing:.07em;font-weight:800}.studio-home .sh-grid-label{top:13px}.studio-home .sh-grid-mark{bottom:13px}
 .studio-home .sh-red-device{position:absolute;left:15%;top:29%;width:73%;height:57%;border:7px solid #ff614b;border-radius:25px;transform:rotate(-14deg);box-shadow:12px 13px 0 #7a1b22,0 22px 25px #14050855}
 .studio-home .sh-red-device i{position:absolute;top:25%;right:14%;display:block;width:18px;height:54px;border-radius:20px;background:#330b13;box-shadow:inset 2px 1px 4px #0009}
-.studio-home .sh-giant-mark{position:absolute;z-index:4;left:50%;top:73%;width:max-content;max-width:none;white-space:nowrap;font-weight:800;line-height:1;font-size:clamp(4.2rem,15vw,16rem);letter-spacing:-.09em;pointer-events:none;transform:translate3d(-50%,calc((1 - var(--sh-word,0))*60vh - var(--sh-word-exit,0)*115vh),0);opacity:calc(1 - var(--sh-word-exit,0));text-shadow:0 3px 18px #0006}
+/* Wordmark stays fully visible on desktop before scrolling, then rises
+   vertically and fades. Keep its X position fixed at the viewport center. */
+.studio-home .sh-giant-mark{position:absolute;z-index:4;left:50%;top:74%;width:max-content;max-width:94vw;white-space:nowrap;font-weight:800;line-height:1;font-size:clamp(4.2rem,15vw,16rem);letter-spacing:-.09em;pointer-events:none;transform:translate3d(-50%,calc(-50% - var(--sh-word-rise,0px)),0);opacity:var(--sh-word-opacity,1);text-shadow:0 3px 18px #0006;will-change:transform,opacity}
 .studio-home .sh-giant-mark span{color:#b7ff54}
 .studio-home .sh-hero-bottom{position:absolute;z-index:5;left:4%;right:4%;bottom:2.2rem;display:flex;justify-content:space-between;font-size:.62rem;font-weight:800;letter-spacing:.12em;pointer-events:none}
 .studio-home .sh-hero-bottom span:first-child{background:#050505d1;padding:5px}
@@ -131,7 +133,7 @@ body:has(.studio-home) .studio-footer{background:#050505;color:white;border-top:
  .studio-home .sh-story-main{top:45%;left:51%;width:58vw;height:58svh;max-height:490px;min-height:275px}
  .studio-home .sh-story-left{top:67%;left:8%;width:32vw;height:36svh;min-height:160px}
  .studio-home .sh-story-right{top:61%;left:70%;width:33vw;height:35svh;min-height:160px}
- .studio-home .sh-giant-mark{top:78%;font-size:clamp(4.4rem,18vw,8rem)}
+ .studio-home .sh-giant-mark{top:75%;font-size:clamp(4.4rem,18vw,8rem)}
  .studio-home .sh-hero-bottom{left:5%;right:5%;bottom:20px;font-size:.52rem}
  .studio-home .sh-hero-bottom span:last-child{max-width:130px;text-align:right;line-height:1.4}
  .studio-home .sh-story-top,.studio-home .sh-story-bottom{font-size:.43rem;padding:6px 7px}
@@ -158,7 +160,7 @@ body:has(.studio-home) .studio-footer{background:#050505;color:white;border-top:
  .studio-home .contact-finale{padding:70px 5% 80px}
  .studio-home .contact-finale .finale-copy h2{font-size:clamp(3rem,11vw,5rem)}
 }
-@media(max-width:390px){.studio-home .sh-hero-copy{top:13%}.studio-home .sh-story-main{top:46%;height:51svh}.studio-home .sh-giant-mark{top:79%}.studio-home .sh-hero-bottom span:last-child{font-size:.45rem}}
+@media(max-width:390px){.studio-home .sh-hero-copy{top:13%}.studio-home .sh-story-main{top:46%;height:51svh}.studio-home .sh-giant-mark{top:76%}.studio-home .sh-hero-bottom span:last-child{font-size:.45rem}}
 @media(prefers-reduced-motion:reduce){
  .studio-home .sh-hero{height:100svh;min-height:650px}
  .studio-home .sh-hero-sticky{position:relative}
