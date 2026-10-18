@@ -1,0 +1,8 @@
+/* React Spring DOM islands: applies only to non-home screens when mounted. */
+main:not(.studio-home) .acelden-spring-surface{position:relative;isolation:isolate;transform-origin:center center;will-change:transform}
+main:not(.studio-home) .acelden-spring-draggable{cursor:grab}
+main:not(.studio-home) .acelden-spring-grabbing{cursor:grabbing}
+main:not(.studio-home) .acelden-spring-glint{position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;background:radial-gradient(ellipse at 72% 18%,#b7ff5445,transparent 68%);mix-blend-mode:screen}
+main:not(.studio-home) .about-media .acelden-spring-glint,main:not(.studio-home) .contact-form-motion .acelden-spring-glint{border-radius:inherit}
+@media(hover:none),(pointer:coarse){main:not(.studio-home) .acelden-spring-draggable{cursor:inherit}}
+@media(prefers-reduced-motion:reduce){main:not(.studio-home) .acelden-spring-surface{transform:none!important;will-change:auto}main:not(.studio-home) .acelden-spring-glint{display:none}}
