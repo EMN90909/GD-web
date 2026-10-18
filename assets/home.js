@@ -8,6 +8,7 @@ export function mountHome(){
  if(!home)return;
  home.classList.add('sh-animated');
  const clean=[];
+ const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
  const orbit=home.querySelector('.sh-service-sequence');
  const orbitCards=orbit?[...orbit.querySelectorAll('[data-orbit-card]')]:[];
  const orbitStage=orbit?.querySelector('.sh-ring-stage');
@@ -61,7 +62,6 @@ export function mountHome(){
  
  const hero=home.querySelector('.sh-hero');
  const sticky=home.querySelector('.sh-hero-sticky');
- const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
  let raf=0;
  function update(){
   raf=0;
