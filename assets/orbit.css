@@ -41,7 +41,7 @@
 .studio-home .sh-orbit-ready .sh-ring-hub .sh-lime{color:#b7ff54}
 .studio-home .sh-orbit-ready .sh-ring-hub small{font-size:.47rem;letter-spacing:.07em;margin-top:6px;color:#a9bca8}
 .studio-home .sh-orbit-ready .sh-orbit-cards{position:absolute;inset:0;display:block;margin:0;max-width:none;pointer-events:none}
-.studio-home .sh-orbit-ready .sh-orbit-card{position:absolute;left:50%;top:50%;margin:0;width:clamp(205px,25vw,330px);height:clamp(185px,25vh,230px);min-height:0;padding:clamp(16px,1.7vw,23px);transform:translate(-50%,-50%);pointer-events:auto;will-change:transform,opacity;transition:border-color .24s,box-shadow .24s;backface-visibility:hidden}
+.studio-home .sh-orbit-ready .sh-orbit-card{position:absolute;left:50%;top:50%;margin:0;width:clamp(205px,25vw,330px);height:clamp(260px,35vh,310px);min-height:0;padding:clamp(16px,1.7vw,23px);transform:translate(-50%,-50%);pointer-events:auto;will-change:transform,opacity;transition:border-color .24s,box-shadow .24s;backface-visibility:hidden}
 .studio-home .sh-orbit-ready .sh-orbit-card[aria-pressed="true"]{background:linear-gradient(145deg,#365132,#162319 75%,#222e22);border-color:#b7ff54;box-shadow:0 0 0 1px #b7ff542b,0 30px 80px #000b,0 0 45px #b7ff541b}
 .studio-home .sh-orbit-ready .sh-orbit-card strong{font-size:clamp(1.27rem,2.0vw,2.15rem)}
 .studio-home .sh-orbit-ready .sh-orbit-bottom{flex:none;width:100%;margin:12px auto 0}
@@ -54,13 +54,24 @@
  .studio-home .sh-orbit-ready .sh-ring-hub{width:65px}
  .studio-home .sh-orbit-ready .sh-ring-hub>span{font-size:1.75rem}
  .studio-home .sh-orbit-ready .sh-ring-hub small{font-size:.36rem}
- .studio-home .sh-orbit-ready .sh-orbit-card{width:clamp(190px,55vw,265px);height:clamp(165px,26vh,205px);padding:15px;border-radius:13px}
+ .studio-home .sh-orbit-ready .sh-orbit-card{width:clamp(190px,55vw,265px);height:clamp(240px,32vh,275px);padding:15px;border-radius:13px}
  .studio-home .sh-orbit-ready .sh-orbit-card strong{font-size:clamp(1.1rem,4.5vw,1.45rem)}
- .studio-home .sh-orbit-ready .sh-orbit-card-description{font-size:.66rem;line-height:1.43}
+ .studio-home .sh-orbit-ready .sh-orbit-card-description{font-size:.69rem;line-height:1.42}
  .studio-home .sh-orbit-ready .sh-orbit-card-top>span:first-child{font-size:1.7rem}
  .studio-home .sh-orbit-ready .sh-orbit-card-foot{font-size:.45rem;padding-top:8px}
  .studio-home .sh-orbit-bottom{font-size:.52rem}
  .studio-home .sh-orbit-progress{width:min(27vw,150px)}
+}
+/* Compact landscape and short mobile screens: preserve readable card content. */
+@media(max-height:680px) and (max-width:760px){
+ .studio-home .sh-orbit-ready .sh-orbit-header h2{font-size:clamp(2rem,8vw,3.4rem);margin:7px 0}
+ .studio-home .sh-orbit-ready .sh-orbit-header p{font-size:.67rem}
+ .studio-home .sh-orbit-ready .sh-orbit-pin{padding:12px 0 14px}
+ .studio-home .sh-orbit-ready .sh-orbit-card{height:235px}
+ .studio-home .sh-orbit-ready .sh-orbit-card-description{font-size:.64rem;line-height:1.35}
+ .studio-home .sh-orbit-ready .sh-orbit-card-top>span:first-child{font-size:1.4rem}
+ .studio-home .sh-orbit-ready .sh-orbit-card strong{font-size:1.04rem}
+ .studio-home .sh-orbit-ready .sh-orbit-card-foot{font-size:.4rem}
 }
 @media(max-width:600px){
  .studio-home .sh-orbit-cards{grid-template-columns:1fr}
