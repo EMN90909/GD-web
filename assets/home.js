@@ -21,7 +21,8 @@ export function mountHome(){
   sticky.style.setProperty('--sh-main',String(ease(p/.39)));
   sticky.style.setProperty('--sh-left',String(ease((p-.12)/.38)));
   sticky.style.setProperty('--sh-right',String(ease((p-.21)/.36)));
-  sticky.style.setProperty('--sh-word',String(ease((p-.43)/.32)));
+  sticky.style.setProperty('--sh-word',String(ease((p-.18)/.35)));
+  sticky.style.setProperty('--sh-word-exit',String(ease((p-.58)/.28)));
  }
  const schedule=()=>{if(!raf)raf=window.requestAnimationFrame(update)};
  if(!prefersReduced.matches){
