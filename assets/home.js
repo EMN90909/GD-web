@@ -47,20 +47,45 @@ export function mountHome(){
   orbitMeter?.style.setProperty('transform','scaleX('+(1+position)/(orbitCards.length)+')');
   if(focus!==orbitActive){
    orbitActive=focus;
-   orbitCards.forEach((card,i)=>card.setAttribute('aria-pressed',String(i===focus)));
+   orbitCards.forEach((card,i)=>{
+    card.setAttribute('aria-pressed',String(i===focus));
+    card.tabIndex=i===focus?0:-1;
+   });
    if(orbitCount)orbitCount.textContent=String(focus+1).padStart(2,'0')+' / '+String(orbitCards.length).padStart(2,'0');
    orbitProgress?.setAttribute('aria-valuenow',String(focus+1));
   }
  }
  if(orbitCards.length>1&&!prefersReduced.matches){
+  const navigateToCard=(i)=>{
+   const index=Math.max(0,Math.min(orbitCards.length-1,i));
+   const sectionTop=orbit.getBoundingClientRect().top+window.scrollY;
+   const range=Math.max(0,orbit.offsetHeight-window.innerHeight);
+   const fraction=.06+.86*(index/(orbitCards.length-1));
+   window.scrollTo({top:sectionTop+fraction*range,behavior:'smooth'});
+  };
   const buttons=orbitCards.map((card,i)=>{
-   const click=()=>{
-    const sectionTop=orbit.getBoundingClientRect().top+window.scrollY;
-    const range=Math.max(0,orbit.offsetHeight-window.innerHeight);
-    window.scrollTo({top:sectionTop+(i/(orbitCards.length-1))*range,behavior:'smooth'});
+   const click=()=>navigateToCard(i);
+   const keydown=event=>{
+    const key=event.key;
+    if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(key))return;
+    event.preventDefault();
+    const current=orbitActive>=0?orbitActive:i;
+    const next=key==='Home'?0:key==='End'?orbitCards.length-1:
+     (key==='ArrowRight'||key==='ArrowDown'?Math.min(current+1,orbitCards.length-1):Math.max(current-1,0));
+    navigateToCard(next);
+    orbitCards[next].focus({preventScroll:true});
    };
    card.addEventListener('click',click);
-   return ()=>card.removeEventListener('click',click);
+   card.addEventListener('keydown',keydown);
+   return ()=>{
+    card.removeEventListener('click',click);
+    card.removeEventListener('keydown',keydown);
+    card.removeAttribute('aria-pressed');
+    card.removeAttribute('tabindex');
+    card.style.transform='';
+    card.style.opacity='';
+    card.style.zIndex='';
+   };
   });
   clean.push(...buttons);
  }

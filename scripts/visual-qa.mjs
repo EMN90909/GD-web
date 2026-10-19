@@ -58,9 +58,9 @@ async function orbitCheck(page,viewName){
  await page.evaluate(y=>scrollTo(0,y),bounds.top+range*.4);
  await page.waitForTimeout(100);
  await page.locator('[data-orbit-card="3"]').click({force:true});
- await page.waitForTimeout(250);
+ await page.waitForFunction(()=>document.querySelector('.sh-orbit-progress')?.getAttribute('aria-valuenow')==='4',null,{timeout:3500});
  const count=await page.locator('.sh-orbit-progress').getAttribute('aria-valuenow');
- assert(['3','4'].includes(count),'click should scroll to requested card');
+ assert.equal(count,'4','click should select the requested card');
 }
 for(const [name,viewport] of [
  ['desktop-wide',{width:1440,height:900}],
@@ -120,6 +120,23 @@ await check('Normal navigation to services and contact',async()=>{
  await page.waitForFunction(()=>!!document.querySelector('.contact-form-motion.acelden-spring-surface'),{timeout:20000});
 });
 await page.close();
+const fromAbout = await makePage('from-about',{width:1366,height:768});
+await check('Secondary entry route loads carousel CSS when returning Home',async()=>{
+ await fromAbout.goto(ORIGIN+'/about.html',{waitUntil:'load'});
+ await fromAbout.locator('.nav .logo').click();
+ await fromAbout.locator('#home-services.sh-orbit-ready').waitFor({timeout:20000});
+ await fromAbout.waitForFunction(()=>{
+  const node=document.querySelector('.sh-orbit-pin');
+  return node && getComputedStyle(node).position==='sticky' &&
+    !!document.querySelector('link[href="assets/orbit.css"]');
+ },null,{timeout:20000});
+ const orbitCSS=await fromAbout.locator('.sh-orbit-card').first().evaluate(
+  el=>getComputedStyle(el).position
+ );
+ assert.equal(orbitCSS,'absolute','the carousel should be fully styled after navigation');
+ await shot(fromAbout,'return-home-orbit');
+});
+await fromAbout.close();
 const rm=await makePage('reduced-motion',{width:390,height:844},'reduce');
 await check('Reduced motion renders cards without scroll pinning',async()=>{
  assert.equal(await rm.locator('.sh-service-sequence.sh-orbit-ready').count(),0);
